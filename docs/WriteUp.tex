@@ -301,6 +301,40 @@ In order to put a NPN transistor into staturation mode the volatege supplied to 
 needs to be greater that the voltage supplied to the emitter, V\textsubscript{E}. To put into cut-off mode
 it needs to be the opposite. Likewise with PNP transistors it is reversed.
 
+After considering these factors I decided to perform an experiment to get use to using transistors. I did
+this by connect up an led and transistor to my board and checking that I can turn it off and on by emmitting
+an output voltage on one of the pins. A schematic of my experiment can be seen below in figure >>>>>>.
+
+
+
+I flash a example program onto the board called "Blinky". The purpose of this program to to turn a output
+pin on and off every second. This output pin is labeled the voltage alternator in th diagram. After I
+design this circuit I then built it on a bread board which is shown below in figure >>>>>>>. The result
+of this is the led turn off and the on again.
+
+\subsubsection{Relay}
+
+An alternative to the transistors is the relay. Similarly to the transistor this can work as an electronic
+switch. The main difference between a relay and a transistor is that a relay have physical moving parts
+inside. Inside a relay there is an electro magnet which can pull a thin piece of metal down to make the 
+switch close. This is how a relay works. Due to this mechanisism a relay can be significantly bigger than
+and a transistor it can calso handle higher volatages with ease. A downside to a relay is that it can
+take longer for it to switch on and off. Luckly with my choice of board there is a addon board that has
+relay support called the "Relay shield". This make setting up the relays significantly easier than setting
+up the transistors. This relay sheild can also handle high voltages meaning it may be able to control the
+mains supply to the server making it more power efficient than transistors. The only downside to using this
+addon is that it is significantly more expensive than using the raw components. A link and a picture of this
+addon board is shown down below.
+
+\subsubsection{Conclusion}
+In conclusion I decided to go with the relay addon board due to it being design for this exact practice and
+it's convience. Even though the experiment performed with the transistor was sucessful it would fail on
+higher voltages on the mains therefore it would be less power efficent.
+
+\section{Design}
+
+After doing this research I think it is now time to move on and start building schematics and pesudo code
+for how I want the project to look like.
 
 \end{document}
 

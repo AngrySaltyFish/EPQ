@@ -4,6 +4,9 @@
 \usepackage{hyperref}
 \usepackage{tabularx}
 \usepackage{gantt}
+\usepackage{listings}
+\usepackage{color}
+
 
 \hypersetup{
     colorlinks=true, %set true if you want colored links
@@ -21,8 +24,41 @@
 \def\@seccntformat#1{%
     \expandafter\ifx\csname c@#1\endcsname\c@section\else
     \csname the#1\endcsname\quad
-      \fi}
+\fi}
 \makeatother
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+    backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+    basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+    breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+    breaklines=true,                 % sets automatic line breaking
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{mygreen},    % comment style
+    deletekeywords={...},            % if you want to delete keywords from the given language
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+    frame=single,                    % adds a frame around the code
+    keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    keywordstyle=\color{blue},       % keyword style
+    language=C,                      % the language of the code
+    morekeywords={*,...},            % if you want to add more keywords to the set
+    numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+    numbersep=5pt,                   % how far the line-numbers are from the code
+    numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+    rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+    showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+    showstringspaces=false,          % underline spaces within strings only
+    showtabs=false,                  % show tabs within strings adding particular underscores
+    stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+    stringstyle=\color{mymauve},     % string literal style
+    tabsize=2,                       % sets default tabsize to 2 spaces
+    title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
 
 \begin{document}
 
@@ -248,7 +284,7 @@ that I will discuss in detail are transitors.
 \begin{figure}
 
     The source for this information: \url{https://learn.sparkfun.com/tutorials/transistors}
-    
+
     There are many different types of transistors but the most common and the one I am most interested in is
     the "Bipolar junction transistor" or "BJT" for short. There are two types of BJT that I need to discuss
     which are NPN and PNP. Before I start describing those it is importatnt to understand the basic anotomey
@@ -334,7 +370,116 @@ higher voltages on the mains therefore it would be less power efficent.
 \section{Design}
 
 After doing this research I think it is now time to move on and start building schematics and pesudo code
-for how I want the project to look like.
+for how I want the project to look like. I think the most critical component of this project is the
+actual functionality of turning the relay on and off remotely.
 
+\subsection{Turning the relay off and on remotely}
+I think the first thing I would like to approach would be the software behind this action. My reasoning
+behind this is that the hardware setup will be very similar to the relay test hardware the only difference
+is instead of having an led I will have the two power wires from the server.
+
+\subsubsection{Software}
+Before describing how I plan to turn the server off and on I would like to explain the basic structure of
+the particle photon api.
+
+Within the partivle photon api there are three basic functions: setup() and loop(). The first function
+setup is run when the particle photon boots up so this should be use to initialize any important variables
+that will be used throughout the function. The second procedure loop repeats all of the code inside as long
+as the photon is switch on. Below is some example code that was use during the tests for the relay and the
+transistor called blinky. This simply turns an pin output on and off and is show in Fig ~\ref{fig:exampleCode}
+
+\begin{figure}
+    \begin{lstlisting}
+
+        int led1 = D0; // Instead of writing D0 over and over again, we'll write led1
+        int led2 = D7; // Instead of writing D7 over and over again, we'll write led2
+        
+        void setup() {
+        
+          // We are going to tell our device that D0 and D7 (which we named led1 and led2 respectively) are going to be output
+          // (That means that we will be sending voltage to them, rather than monitoring voltage that comes from them)
+        
+          // It's important you do this here, inside the setup() function rather than outside it or in the loop function.
+        
+          pinMode(led1, OUTPUT);
+          pinMode(led2, OUTPUT);
+        
+        }
+        
+        // Next we have the loop function, the other essential part of a microcontroller program.
+        // This routine gets repeated over and over, as quickly as possible and as many times as possible, after the setup function is called.
+        // Note: Code that blocks for too long (like more than 5 seconds), can make weird things happen (like dropping the network connection).  The built-in delay function shown below safely interleaves required background activity, so arbitrarily long delays can safely be done if you need them.
+        
+        void loop() {
+          // To blink the LED, first we'll turn it on...
+          digitalWrite(led1, HIGH);
+          digitalWrite(led2, HIGH);
+        
+          // We'll leave it on for 1 second...
+          delay(1000);
+        
+          // Then we'll turn it off...
+          digitalWrite(led1, LOW);
+          digitalWrite(led2, LOW);
+        
+          // Wait 1 second...
+          delay(1000);
+        
+          // And repeat!
+        }
+    \end{lstlisting}
+    \caption{Example Code} \label{fig:ExampleCode}
+    \vspace{0.5cm}
+    The comment lines denoted by "//" explain what is happening in the code.
+\end{figure}
+
+Now that I have explained the basics I can now describe some code that should allow me to turn
+a relay on and off. This code is shown in ~\ref{fig:relayTest}.
+\begin{figure}
+    \begin{lstlisting}
+        int relayState = 0;
+        
+        
+        void setup()
+        {
+           //Initilize the relay control pins as output
+           pinMode(RELAY1, OUTPUT);
+           // Initialize all relays to an OFF state
+           digitalWrite(RELAY1, LOW);
+           //register the Particle function
+           Particle.function("relay", relayControl);
+        }
+        
+        void loop()
+        {
+           // This loops for ever
+        }
+        
+        // command format r1,HIGH
+        int relayControl(String command)
+        {
+            relayState = !relayState;
+          // parse the relay number
+        
+        
+          // write to the appropriate relay
+          digitalWrite(0, relayState);
+          return 1;
+        }
+    \end{lstlisting}
+    \caption{Relay Code} \label{fig:relayTest}
+    \vspace{0.5cm}
+    The code is similar to the previous example (Fig ~\ref{fig:ExampleCode}) the only big
+    difference in the "relayControl" function. All this function does is turn the relayState
+    variable to a one if it is a zero and to a zero if it is a one. Once it has done this it
+    set the relay to this new state. In the setup() function I register this function with
+    particle which means that I can now trigger this function remotely using a POST request.
+\end{figure}
+
+To trigger this function with a http POST request I needed to know two pieces of information
+. The first is my device id which is a number that is assign to every particle photon connect
+to the particle cloud. This is use so the particle cloud know what device I want to select.
+The second piece of information is my access token. This another number that is assign to
+my account instead of the actual device. This enables the particle cloud to verify that I
+am who I say I am. Similar to a password.
 \end{document}
-

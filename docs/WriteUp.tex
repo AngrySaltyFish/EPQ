@@ -80,11 +80,12 @@ server. This device must be able to acheive some of the following functions:
     \item Be able to turn the server on and off
     \item Be power efficient so the running cost is low
     \item forward a shell connection onto the server
+    \item Have an interface to interact with the device
     \item Do not exceed the budget of \$50
 \end{itemize}
 
 The first object that I wish to discuss is having the ability to remotely turn on and off the
-server. This could be done in two ways: the first would be to use wake on lan which would be 
+server. This could be done in two ways: the first would be to use wake on lan which would be
 a way of doing it through software; the second is using electrical components to act as an
 electric switch. \\
 
@@ -92,7 +93,7 @@ The first approach I would like to talk about is using wake on lan. This seems t
 way of doing what I am proposing which means that setting this up will be straight forward and
 well documented. The only problem with using this method is that the server will constantly need
 to be on standby which conflicts with my second goal of this project being power efficient. The
-second approach is the opposite of the first as it will be more difficult to set up due to the 
+second approach is the opposite of the first as it will be more difficult to set up due to the
 fact it will require me to buy parts which need to be appopiate to interact the server. On the
 plus side though it could be a more power efficient as I could design it to control the mains
 power supply as well so that it will not need to be on standby.
@@ -104,7 +105,7 @@ chart (Fig ~\ref{fig:Gantt Chart}) to illustrate how I intend to use my time. Th
 only shows how I will use the time up to the initial draft. There is time availiable after
 this draft but I would like to use this time to improve my write up and act upon feedback.
 
-\begin{figure}  
+\begin{figure}
     \begin{gantt}[xunitlength=\textwidth / 16]{7}{16}
         \begin{ganttitle}
             \titleelement{Number of weeks}{16}
@@ -120,7 +121,7 @@ this draft but I would like to use this time to improve my write up and act upon
         %\ganttmilestonecon{A connected Milestone}{7}
     \end{gantt}
     \caption{Gantt chart} \label{fig:Gantt Chart}
-\end{figure}  
+\end{figure}
 
 \break
 \section{Reseach}
@@ -129,7 +130,7 @@ this draft but I would like to use this time to improve my write up and act upon
 The very first thing that I need to consider when designing this is what development board
 I will as everything else will be dependant upon this. The 4 factors that I decided would
 be most important to consider are: the price of the board; how easy it would to connect
-and control through the internet and power consumption. 
+and control through the internet and power consumption.
 
 The reason I think power consumption should be something to consider is that this board will
 be on for long periods of time to make sure that the server is always available. Which means
@@ -167,7 +168,7 @@ The characteristics that I have mentioned above make the raspberry effortless to
 mainly because it runs the linux operating system. This means that I can use and run any language
 that runs linux givving me a wide range of tools to use. I could also install and use programs that
 other people have written. As mention above the raspberry pi is very popular meaning the is a wide
-range of hardware extenstion that may make it easier to control external components. 
+range of hardware extenstion that may make it easier to control external components.
 
 \subsubsection{BeagleBone Black / BeagleBone Black Wireless}
 
@@ -207,7 +208,7 @@ to write in than a language such as Python.
 \subsubsection{Audino Uno}
 
 The Audino is a classic development board that instead of the previous two items does not have the linux
-operating system. That being said due to it's large poplarity there are a huge number of libraries and 
+operating system. That being said due to it's large poplarity there are a huge number of libraries and
 APIs that you can use. \\ 
 
 \begin{tabularx}{\textwidth}{| X | X |}
@@ -262,7 +263,7 @@ compared giving me plenty of left over money to buy all the hardware components 
 
 \subsubsection{The Board I Chose}
 
-After considering the pros and cons of all of these boards I decided that a microcontroller type 
+After considering the pros and cons of all of these boards I decided that a microcontroller type
 would be much more suitable for my project. My reasoning behind this is that a fast processor and
 a linux operating system is unecessary in this situation meaning that I would be wasting power on
 features that I am not going to use. The price is also higher for the non-microcontrollers.
@@ -296,7 +297,7 @@ that I will discuss in detail are transitors.
 
     In the layout above (Fig ~\ref{fig:transistor-layout}) you can clearly see that a transitor has three legs.
     These legs each do different things and have special names: collecter, base and emitter. The leg in the middle
-    called the base is the one we are most interested in as this can control the current throught the emitter and 
+    called the base is the one we are most interested in as this can control the current throught the emitter and
     collector by varying the input to it. The collector and emitter can change based upon the type of transitor
 
 \end{figure}
@@ -309,16 +310,16 @@ that I will discuss in detail are transitors.
     The two different diagrams above show the different types of BJT transitors
     (Fig ~\ref{fig:different-transitor-layout}). \\
 
-    The only difference between these two types which is illustrated by this figure is the direction of the 
+    The only difference between these two types which is illustrated by this figure is the direction of the
     emiiter arrow. This small difference has big implications and lead to different properties for each. I
     will now start to disscuss these consequences and which out of the two I think is most suitable for this
     project.
 
 \end{figure}
 
-\break 
+\break
 
-Unlike many other electrical components like resistors and capacitors which have a linear relationship with 
+Unlike many other electrical components like resistors and capacitors which have a linear relationship with
 voltage and current transitors have four different ways of handling electrical power:
 
 \begin{itemize}
@@ -330,7 +331,7 @@ voltage and current transitors have four different ways of handling electrical p
 \end{itemize}
 
 For the purposes of this project the only modes worth discussing are "Saturation" and "Cut-off" because we
-are only interested in on or off and not anything inbetween. 
+are only interested in on or off and not anything inbetween.
 
 To determine what mode the transistor is in you need to investigate what voltage is supplied to each pin.
 In order to put a NPN transistor into staturation mode the volatege supplied to the base, V\textsubscript{B}
@@ -393,38 +394,38 @@ transistor called blinky. This simply turns an pin output on and off and is show
 
         int led1 = D0; // Instead of writing D0 over and over again, we'll write led1
         int led2 = D7; // Instead of writing D7 over and over again, we'll write led2
-        
+
         void setup() {
-        
+
           // We are going to tell our device that D0 and D7 (which we named led1 and led2 respectively) are going to be output
           // (That means that we will be sending voltage to them, rather than monitoring voltage that comes from them)
-        
+
           // It's important you do this here, inside the setup() function rather than outside it or in the loop function.
-        
+
           pinMode(led1, OUTPUT);
           pinMode(led2, OUTPUT);
-        
+
         }
-        
+
         // Next we have the loop function, the other essential part of a microcontroller program.
         // This routine gets repeated over and over, as quickly as possible and as many times as possible, after the setup function is called.
         // Note: Code that blocks for too long (like more than 5 seconds), can make weird things happen (like dropping the network connection).  The built-in delay function shown below safely interleaves required background activity, so arbitrarily long delays can safely be done if you need them.
-        
+
         void loop() {
           // To blink the LED, first we'll turn it on...
           digitalWrite(led1, HIGH);
           digitalWrite(led2, HIGH);
-        
+
           // We'll leave it on for 1 second...
           delay(1000);
-        
+
           // Then we'll turn it off...
           digitalWrite(led1, LOW);
           digitalWrite(led2, LOW);
-        
+
           // Wait 1 second...
           delay(1000);
-        
+
           // And repeat!
         }
     \end{lstlisting}
@@ -438,8 +439,8 @@ a relay on and off. This code is shown in ~\ref{fig:relayTest}.
 \begin{figure}
     \begin{lstlisting}
         int relayState = 0;
-        
-        
+
+
         void setup()
         {
            //Initilize the relay control pins as output
@@ -449,25 +450,25 @@ a relay on and off. This code is shown in ~\ref{fig:relayTest}.
            //register the Particle function
            Particle.function("relay", relayControl);
         }
-        
+
         void loop()
         {
            // This loops for ever
         }
-        
+
         // command format r1,HIGH
         int relayControl(String command)
         {
+          // invert the relay number
             relayState = !relayState;
-          // parse the relay number
-        
-        
+
+
           // write to the appropriate relay
           digitalWrite(0, relayState);
           return 1;
         }
     \end{lstlisting}
-    \caption{Relay Code} \label{fig:relayTest}
+    \caption{Relay Test Code} \label{fig:relayTest}
     \vspace{0.5cm}
     The code is similar to the previous example (Fig ~\ref{fig:ExampleCode}) the only big
     difference in the "relayControl" function. All this function does is turn the relayState
@@ -476,10 +477,209 @@ a relay on and off. This code is shown in ~\ref{fig:relayTest}.
     particle which means that I can now trigger this function remotely using a POST request.
 \end{figure}
 
+\pagebreak
 To trigger this function with a http POST request I needed to know two pieces of information
 . The first is my device id which is a number that is assign to every particle photon connect
 to the particle cloud. This is use so the particle cloud know what device I want to select.
 The second piece of information is my access token. This another number that is assign to
 my account instead of the actual device. This enables the particle cloud to verify that I
 am who I say I am. Similar to a password.
+
+I can then modify this code to get to be more specific to the turning on the server.
+
+\begin{figure}
+    \begin{lstlisting}
+    int RELAY1 = D0;
+
+    void setup()
+    {
+       //Initilize the relay control pins as output
+       pinMode(RELAY1, OUTPUT);
+       // Initialize all relays to an OFF state
+       digitalWrite(RELAY1, LOW);
+
+       //register the Particle function
+       Particle.function("relay", relayControl);
+    }
+
+    void loop()
+    {
+       // This loops for ever
+    }
+
+    // command format r1,HIGH
+    int relayControl(String command)
+    {
+        digitalWrite(0, 1);
+        delay(500);
+        digitalWrite(0, 0);
+
+        return 1;
+    }
+    \end{lstlisting}
+    \caption{Relay Code} \label{fig:relayCode}
+    \vspace{0.5cm}
+    This code turns on the relay for 500 miliseconds and then turns it back on again
+    meaning the relayControl function is now used exclusively to turn on the server.
+    This is becuase later on I find an interest feature of the server meaing the photon
+    will not be turning the server off.
+
+\end{figure}
+
+\subsubsection{The Hardware}
+Now that I have explain the software the next logical step is the descibe the hardware. The
+hardware is pretty simplistic and follows the same structure as the relay test that was
+explained above (Fig >>>>>). The only difference between this hard and the one previously
+is that instead of an led being used I will connect the two wires connect to the power
+switch on the server.
+
+
+\subsection{Forwarding a shell}
+Another requirement for device is to be able to forward a shell onto the server. Doing this
+purely from this device is counter productive and goes beyond the scope of this project. The
+approach that make most sense for this project is to have the particle photon grab the public
+ip address and return this to a client whenever the client issues the command to turn on the
+server. This client will be the the interface for the device stated in one of the predetermined
+goals. For the moment I will analyze what is need to grab the public ip on the deivce. Fortunatly
+this can be done using the \href{https://docs.particle.io/reference/firmware/photon/#get-public-ip}
+{particle photon api}. The example code given by the documentation is given below in figure
+~\ref{fig:publicIpExample}
+
+\begin{figure}[h]
+    \begin{lstlisting}
+    // Open a serial terminal and see the IP address printed out
+    void handler(const char *topic, const char *data) {
+        Serial.println("received " + String(topic) + ": " + String(data));
+    }
+
+    void setup() {
+        Serial.begin(115200);
+        Particle.subscribe("particle/device/ip", handler);
+        Particle.publish("particle/device/ip");
+    }
+    \end{lstlisting}
+    \caption{Public Ip Example code} \label{fig:publicIpExample}
+    %\vspace{0.5cm}
+    The two main things to focus here are the particle subscribe and publish the rest of the
+    code is to set up and display the ip every time it changes on a serial screen. Since
+    I do not have a serial connection and nor do I want one I shall not clarify what it
+    is or how it works.
+\end{figure}
+
+The "Particle.subscribe" function allows the user to listen out for certain events and then
+attach a custom to these event so that everytime the event occurs the custom function is
+called. This is very useful for this project as  public ip addresss are subject to change meaning
+if I use this the ip address will always be the current one. The "Particle.publish" is a way
+of manually triggering the event specified in the paremeters. These two lines can be used
+in the device code where the we can attach a custom function that changes a global string variable
+that contains the ip address. Then it's easy to change the relay control function to return this
+variable instead of an integear. Once I have this value it should be easy to create a ssh session
+with interface and the server. I think this is better than trying to create my own connect as it
+will be more secure and easier to set up.
+
+With the code for the relay (Fig ~\ref{fig:relayCode}) mix in with this additional code it should look
+something like this:
+
+\begin{figure}[h]
+    \begin{lstlisting}
+    int RELAY1 = D0;
+    char ip[15];
+
+    void setup()
+    {
+       //Initilize the relay control pins as output
+       pinMode(RELAY1, OUTPUT);
+       // Initialize all relays to an OFF state
+       digitalWrite(RELAY1, LOW);
+
+       //register the Particle function
+       Particle.function("relay", relayControl);
+       Particle.subscribe("particle/device/ip" , handler);
+       Particle.publish("particle/device/ip");
+
+    }
+
+    void loop()
+    {
+       // This loops for ever
+    }
+
+    void handler(const char *topic, const char *data)
+    {
+        //sprintf(ip, "%s", data);
+        strcpy(ip, data);
+    }
+
+    // command format r1,HIGH
+    String relayControl(String command)
+    {
+        digitalWrite(0, 1);
+        delay(500);
+        digitalWrite(0, 0);
+
+        return String(ip);
+    }
+    \end{lstlisting}
+\end{figure}
+
+Unfortunatly this does not compile and raises an error due to the relayControl function.
+According to the documentation this is because functions that are registered with the
+cloud can only return int which raises a fundemental problem with this design. As such
+I decided that I will register a variable cloud that will contain the ip address and can
+be retrived by a GET request. The working code is shown below.
+
+\begin{figure}[h]
+    \begin{lstlisting}
+    int RELAY1 = D0;
+    char ip[15];
+
+    void setup()
+    {
+       //Initilize the relay control pins as output
+       pinMode(RELAY1, OUTPUT);
+       // Initialize all relays to an OFF state
+       digitalWrite(RELAY1, LOW);
+
+       //register the Particle function
+       Particle.function("relay", relayControl);\
+       Particle.variable("IpAddr", ip);
+       Particle.subscribe("particle/device/ip" , handler);
+       Particle.publish("particle/device/ip");
+
+    }
+
+    void loop()
+    {
+       // This loops for ever
+    }
+
+    void handler(const char *topic, const char *data)
+    {
+        //sprintf(ip, "%s", data);
+        strcpy(ip, data);
+    }
+
+    // command format r1,HIGH
+    int relayControl(String command)
+    {
+        digitalWrite(0, 1);
+        delay(500);
+        digitalWrite(0, 0);
+
+        return 1;
+    }
+    \end{lstlisting}
+    \caption{Public Ip Example code} \label{fig:publicIpExample}
+    \vspace{0.5cm}
+    The code in figure ~\ref{fig:publicIpExample} can be shown working in figure ~\ref{fig:ipTest}.
+\end{figure}
+
+
+\begin{figure}[h]
+    \noindent\makebox[\textwidth]{\includegraphics[width=\paperwidth-3cm]{pictures/IpTest.png}};
+    \caption{Ip test} \label{fig:ipTest}
+    The ip address is shown in the red box and I have blacked out the access tokens for the request
+    for obvious reasons.
+\end{figure}
+
 \end{document}

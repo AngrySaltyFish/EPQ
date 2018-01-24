@@ -6,6 +6,7 @@
 \usepackage{gantt}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{float}
 
 
 \hypersetup{
@@ -41,11 +42,7 @@
     commentstyle=\color{mygreen},    % comment style
     deletekeywords={...},            % if you want to delete keywords from the given language
     escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-    extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-    frame=single,                    % adds a frame around the code
-    keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-    keywordstyle=\color{blue},       % keyword style
-    language=C,                      % the language of the code
+    extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8 frame=single,                    % adds a frame around the code keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible) keywordstyle=\color{blue},       % keyword style language=C,                      % the language of the code
     morekeywords={*,...},            % if you want to add more keywords to the set
     numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
     numbersep=5pt,                   % how far the line-numbers are from the code
@@ -161,7 +158,7 @@ the technical specs of all of the models. \\
 \end{tabularx}
 \newline
 
-Information is gather at this website: https://www.makershed.com/pages/raspberry-pi-comparison-chart
+The source of the information is in the refrences\cite{raspberryPi}
 \newline
 
 The characteristics that I have mentioned above make the raspberry effortless to develop on;
@@ -192,10 +189,7 @@ The table below will give a summery of the features availiable. \\
 \end{tabularx}
 \newline
 
-Information Gather at https://www.digikey.com/en/product-highlight/t/texas-instruments/beagleboard
-\url{https://www.amazon.com/BeagleBone-Black-Wireless-Starter-Kit/dp/B01NGTOX40/ref=sr_1_2?ie=UTF8&qid=1510164000&sr=8-2&keywords=beaglebone+wifi&dpID=51g7KiFRteL&preST=_SY300_QL70_&dpSrc=srch}
-\url{https://beagleboard.org/black-wireless}
-\url{https://beagleboard.org/black/}
+The source of the information is in the refrences\cite{beagleboard}
 \newline
 
 The first thing that I noticed when researching this board is that it can be pricey but looking
@@ -209,7 +203,7 @@ to write in than a language such as Python.
 
 The Audino is a classic development board that instead of the previous two items does not have the linux
 operating system. That being said due to it's large poplarity there are a huge number of libraries and
-APIs that you can use. \\ 
+APIs that you can use. \\
 
 \begin{tabularx}{\textwidth}{| X | X |}
     \hline
@@ -223,8 +217,8 @@ APIs that you can use. \\
 \end{tabularx}
 \newline
 
-Information Gather at \url{https://makezine.com/product-review/arduino-uno/}
-
+The source of the information is in the refrences\cite{ardino}
+\newline
 
 The specs on the ardunio are considerably lower than the previous two items due to the fact that
 the arduino is a microcontroller instead of a size down computer. This means that it consumes less
@@ -251,10 +245,8 @@ board is the smallest of all of the ones that I have considered. \\
 \end{tabularx}
 \newline
 
-Informatino Gather at \url{https://makezine.com/product-review/particle-photon/}
-\url{https://docs.particle.io/datasheets/photon-(wifi)/photon-datasheet/#power} \\
-
-%\newline
+The source of the information is in the refrences\cite{particlePhotonSpec}
+\newline
 
 Similarly to the Arduino this board is a microcontroller. The features I mentioned above reagarding
 connectivity will make development considerable easier. This is also the cheapest board that I have
@@ -283,9 +275,6 @@ that I will discuss in detail are transitors.
 \subsubsection{Transitors}
 
 \begin{figure}
-
-    The source for this information: \url{https://learn.sparkfun.com/tutorials/transistors}
-
     There are many different types of transistors but the most common and the one I am most interested in is
     the "Bipolar junction transistor" or "BJT" for short. There are two types of BJT that I need to discuss
     which are NPN and PNP. Before I start describing those it is importatnt to understand the basic anotomey
@@ -348,6 +337,8 @@ I flash a example program onto the board called "Blinky". The purpose of this pr
 pin on and off every second. This output pin is labeled the voltage alternator in th diagram. After I
 design this circuit I then built it on a bread board which is shown below in figure >>>>>>>. The result
 of this is the led turn off and the on again.
+
+The source of the information for this section can be found in the references \cite{transistor}
 
 \subsubsection{Relay}
 
@@ -534,6 +525,27 @@ is that instead of an led being used I will connect the two wires connect to the
 switch on the server.
 
 
+\subsubsection{Taking advantage of a quirk of the server}
+Interesting the server exhibits an odd behaviour that I can take advantage of to improve my
+project which is the usb ports are not powered when the server is on standby but is powered
+when it is turn on. This is useful for two reasons: the first is that I can use it to properly
+check whether the server has successfully turn on and the second is that I can use this new
+power to turn off the particle photon board after it has finished turning on the server.
+
+This does have a side affect however. Which is that I can no longer use the particle
+photon to turn off the server. This is easily resolved as I plan to have an ssh interface
+with the server meaning I turn it off throuh that connection.
+
+This new feature requires me to add to the design of the hardware. Figure ~\ref{fig:usbSch}
+essentially outlines what I want to add. It shows a relay hooked up to the power source of
+the photon so that it is normal closed. But when power is supplied to this relay from the
+usb the relay becomes open turning off the board.
+
+\begin{figure}[H]
+    \noindent\makebox[\textwidth]{\includegraphics[width=\paperwidth-3cm]{pictures/usbLoopSch.png}};
+    \caption{Usb schematic} \label{fig:usbSch}
+\end{figure}
+
 \subsection{Forwarding a shell}
 Another requirement for device is to be able to forward a shell onto the server. Doing this
 purely from this device is counter productive and goes beyond the scope of this project. The
@@ -541,11 +553,11 @@ approach that make most sense for this project is to have the particle photon gr
 ip address and return this to a client whenever the client issues the command to turn on the
 server. This client will be the the interface for the device stated in one of the predetermined
 goals. For the moment I will analyze what is need to grab the public ip on the deivce. Fortunatly
-this can be done using the \href{https://docs.particle.io/reference/firmware/photon/#get-public-ip}
-{particle photon api}. The example code given by the documentation is given below in figure
+this can be done using the particle photon api\cite{publicIPDocs}. The example code given by the
+documentation is given below in figure
 ~\ref{fig:publicIpExample}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \begin{lstlisting}
     // Open a serial terminal and see the IP address printed out
     void handler(const char *topic, const char *data) {
@@ -580,7 +592,7 @@ will be more secure and easier to set up.
 With the code for the relay (Fig ~\ref{fig:relayCode}) mix in with this additional code it should look
 something like this:
 
-\begin{figure}[h]
+\begin{figure}[H]
     \begin{lstlisting}
     int RELAY1 = D0;
     char ip[15];
@@ -628,7 +640,7 @@ cloud can only return int which raises a fundemental problem with this design. A
 I decided that I will register a variable cloud that will contain the ip address and can
 be retrived by a GET request. The working code is shown below.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \begin{lstlisting}
     int RELAY1 = D0;
     char ip[15];
@@ -675,11 +687,174 @@ be retrived by a GET request. The working code is shown below.
 \end{figure}
 
 
-\begin{figure}[h]
+\begin{figure}[H]
     \noindent\makebox[\textwidth]{\includegraphics[width=\paperwidth-3cm]{pictures/IpTest.png}};
     \caption{Ip test} \label{fig:ipTest}
     The ip address is shown in the red box and I have blacked out the access tokens for the request
     for obvious reasons.
 \end{figure}
+
+\subsection{The client interface}
+This section will talk about how I plan to implement a client that can trigger the boards functions
+remotely. Since this is the design section as oppose to the build I will only out line how I plan to
+do this without actually coding it. The first and foremost thing that the interface requires is a
+way to communicate with server. At the moment with the design of the board we can communicate with
+POST and GET http requests meaning I need a way of performing those actions. Fortunatly python has
+many libraries that allow you to perform such actions. One of the most popular and the one that I
+will be using for the interface is the requests library\cite{pythonRequests}. You can send get
+requests using the "requests.get(<url>)" method where "<url>" is the url that you want to send the
+request to. We will set this url to the one of the particle api.
+
+To then connect to the server and communicate with it I can use the "pxssh" library and use that to
+create a proper shell session between the server and interface. 
+
+
+\pagebreak
+
+\section{Information}
+
+\begin{thebibliography}{56}
+
+\bibitem{raspberryPi}
+    \begin{itemize}
+        \item Information for the raspberry pi was gather at this website
+        \begin{itemize}
+            \item Article title: Maker Shed: Arduino | Raspberry Pi | 3D Printers | Microcontroller Kit
+            \item Website title: Maker Shed
+            \item URL          : \url{https://www.makershed.com/pages/raspberry-pi-comparison-chart}
+            \item Date         : ???????
+        \end{itemize}
+    \end{itemize}
+
+\bibitem{beagleboard}
+    \begin{itemize}
+        \item Information for the specs was found on this website
+        \begin{itemize}
+            \item Article title: Selecting BeagleBoard Hardware | DigiKey
+            \item Website title: Digikey.com
+            \item URL          : \url{https://www.digikey.com/en/product-highlight/t/texas-instruments/beagleboard}
+            \item Date         : ???????
+        \end{itemize}
+
+        \item Information for the price of a begalbone kit
+        \begin{itemize}
+            \item Article title: BeagleBone Black Wireless Starter Kit
+            \item Website title: Amazon.com
+            \item URL: \url{https://www.amazon.com/BeagleBone-Black-Wireless-Starter-Kit/dp/B01NGTOX40/ref=sr_1_2?ie=UTF8&qid=1510164000&sr=8-2&keywords=beaglebone+wifi&dpID=51g7KiFRteL&preST=_SY300_QL70_&dpSrc=srch}
+            \item Date         : ???????
+        \end{itemize}
+
+        \item Information for the spec specifc to the BeagleBone black wireless
+        \begin{itemize}
+            \item Article title: BeagleBoard.org - black-wireless
+            \item Website title: Beagleboard.org
+            \item URL          : \url{https://beagleboard.org/black-wireless}
+            \item Date         : ???????
+        \end{itemize}
+
+        \item Information for the spec specifc to the BeagleBone black
+        \begin{itemize}
+            \item Article title: BeagleBoard.org - black
+            \item Website title: BeagleBoard.org - black
+            \item URL          : \url{https://beagleboard.org/black/}
+            \item Date         : ???????
+        \end{itemize}
+
+    \end{itemize}
+
+\bibitem{ardino}
+    \begin{itemize}
+        \item Information and specs for the Ardino Uno was gathered at this website
+        \begin{itemize}
+            \item Author       : Arduino
+            \item Article title: Arduino Uno | Make: DIY Projects and Ideas for Makers
+            \item Website title: Make: DIY Projects and Ideas for Makers
+            \item URL          : \url{https://makezine.com/product-review/arduino-uno/}
+            \item Date         : ???????
+        \end{itemize}
+    \end{itemize}
+
+\bibitem{particlePhotonSpec}
+    \begin{itemize}
+        \item A product review for the particle photon
+        \begin{itemize}
+            \item Author       : Particle
+            \item Article title: Particle Photon | Make: DIY Projects and Ideas for Makers
+            \item Website title: Make: DIY Projects and Ideas for Makers
+            \item URL          : \url{https://makezine.com/product-review/particle-photon/}
+            \item Date         : ???????
+        \end{itemize}
+
+        \item A datasheet for the particle photon
+        \begin{itemize}
+            \item Author       : Particle
+            \item Article title: Particle
+            \item Website title: Docs.particle.io
+            \item URL          : \url{https://makezine.com/product-review/particle-photon/}
+            \item Date         : ???????
+        \end{itemize}
+    \end{itemize}
+
+\bibitem{transistor}
+    \begin{itemize}
+        \item Information and specs for the Ardino Uno was gathered at this website
+        \begin{itemize}
+            \item Author       : SparkFun Kit
+            \item Article title: Transistors - learn.sparkfun.com
+            \item Website title: Learn.sparkfun.com
+            \item URL          : \url{https://learn.sparkfun.com/tutorials/transistors}
+            \item Date         : ???????
+        \end{itemize}
+    \end{itemize}
+
+\bibitem{publicIPDocs}
+    \begin{itemize}
+        \item Information and specs for the Ardino Uno was gathered at this website
+        \begin{itemize}
+            \item Author       : Particle
+            \item Article title: Particle
+            \item Website title: Docs.particle.io
+            \item URL          : \url{https://docs.particle.io/reference/firmware/photon/#get-public-ip}
+            \item Date         : ???????
+        \end{itemize}
+    \end{itemize}
+
+\bibitem{pythonRequests}
+    \begin{itemize}
+        \item Information and specs for the Ardino Uno was gathered at this website
+        \begin{itemize}
+            \item Article title: Requests: HTTP for Humans — Requests 2.18.4 documentation
+            \item Website title: Docs.python-requests.org
+            \item URL          : \url{http://docs.python-requests.org/en/master/}
+            \item Date         : ???????
+        \end{itemize}
+    \end{itemize}
+\end{thebibliography}
+
+\subsection{Activity Log}
+
+\begin{tabularx}{\textwidth}{| X | X |}
+    \hline
+    \textbf{Date}            &               \textbf{Activity}           \\ \hline
+    21/08/17                 &This is the first day when I outlined what \\
+                             &I want my project to be and decided on a   \\
+                             &title.                                     \\ \hline
+    28/08/17                 &This is where I create and outline of what \\
+                             &I want to allocate to                      \\ \hline
+    04/09/17                 &I started to research the                  \\
+                             &boards that I was thinking of              \\
+                             &using.                                     \\ \hline
+    02/10/17                 &Finished the research on the boards and    \\
+                             &started to look into the diffrent          \\
+                             &electrical switches I can use.             \\ \hline
+    08/10/17                 &This is the day that I recieved            \\
+                             &the particle photon and performed          \\
+                             &the transistor test with it.               \\ \hline
+    06/11/17                 &Finished the research on electrical        \\
+                             &switches                                   \\ \hline
+    20/11/17                 &Started the design and looking into the    \\
+                             &particle photon docs.                      \\ \hline
+
+\end{tabularx}
 
 \end{document}

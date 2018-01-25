@@ -344,15 +344,21 @@ The source of the information for this section can be found in the references \c
 
 An alternative to the transistors is the relay. Similarly to the transistor this can work as an electronic
 switch. The main difference between a relay and a transistor is that a relay have physical moving parts
-inside. Inside a relay there is an electro magnet which can pull a thin piece of metal down to make the 
+inside. Inside a relay there is an electro magnet which can pull a thin piece of metal down to make the
 switch close. This is how a relay works. Due to this mechanisism a relay can be significantly bigger than
-and a transistor it can calso handle higher volatages with ease. A downside to a relay is that it can
+a transistor and it can calso handle higher volatages with ease. A downside to a relay is that it can
 take longer for it to switch on and off. Luckly with my choice of board there is a addon board that has
-relay support called the "Relay shield". This make setting up the relays significantly easier than setting
+relay support called the "Relay shield"\cite{relaySheild}. This make setting up the relays significantly easier than setting
 up the transistors. This relay sheild can also handle high voltages meaning it may be able to control the
 mains supply to the server making it more power efficient than transistors. The only downside to using this
-addon is that it is significantly more expensive than using the raw components. A link and a picture of this
-addon board is shown down below.
+addon is that it is significantly more expensive than using the raw components. A picture of this
+addon board is shown down below in figure ~\ref{fig:relayShield}.
+
+
+\begin{figure}[H]
+    \noindent\makebox[\textwidth]{\includegraphics[width=\paperwidth-3cm]{pictures/relay-sheidl.jpg}};
+    \caption{Picture of the relay shield} \label{fig:relayShield}
+\end{figure}
 
 \subsubsection{Conclusion}
 In conclusion I decided to go with the relay addon board due to it being design for this exact practice and
@@ -518,16 +524,28 @@ I can then modify this code to get to be more specific to the turning on the ser
 \end{figure}
 
 \subsubsection{The Hardware}
-Now that I have explain the software the next logical step is the descibe the hardware. The
-hardware is pretty simplistic and follows the same structure as the relay test that was
-explained above (Fig >>>>>). The only difference between this hard and the one previously
-is that instead of an led being used I will connect the two wires connect to the power
-switch on the server.
+The next thing to design in terms of turning on the server is to look at the hardware.
+Fortunatly it is simple to set up and is similar to the hardware in the relay test. The main
+part of the hardware are two relays that control mains power supply and turning the server on
+from standby and are connected up to the pins "D1" and "D0" respectively. I have also added a
+override switch which will block any attempt to turn on the server. There is however a difference
+between the relay responsible for the mains power supply and the relay for turning on the server
+and that is the inputs that they are connected up to. The mains power suppy is hooked up to the NC
+input meaning that current can flow through normally unless the particle photon powers the relay. While
+the relay for turning on the server is connected to NO inputer meaning that current can only flow
+if the relay is powered. This makes sense as in the next section I talk about automatically turning
+off the relay board after it is finished turning on the server meaning that it will not be able to
+consistantly power on the relay on the mains.
+
+\begin{figure}[H]
+    \noindent\makebox[\textwidth]{\includegraphics[width=\paperwidth-3cm]{pictures/turnOnRelay.png}};
+    \caption{Hardware schematic} \label{fig:turnOnRelay}
+\end{figure}
 
 
 \subsubsection{Taking advantage of a quirk of the server}
-Interesting the server exhibits an odd behaviour that I can take advantage of to improve my
-project which is the usb ports are not powered when the server is on standby but is powered
+Interestly the server exhibits an odd behaviour that I can take advantage of to improve my
+project which is that the usb ports are not powered when the server is on standby but is powered
 when it is turn on. This is useful for two reasons: the first is that I can use it to properly
 check whether the server has successfully turn on and the second is that I can use this new
 power to turn off the particle photon board after it has finished turning on the server.
@@ -538,7 +556,7 @@ with the server meaning I turn it off throuh that connection.
 
 This new feature requires me to add to the design of the hardware. Figure ~\ref{fig:usbSch}
 essentially outlines what I want to add. It shows a relay hooked up to the power source of
-the photon so that it is normal closed. But when power is supplied to this relay from the
+the photon so that it is normally closed. But when power is supplied to this relay from the
 usb the relay becomes open turning off the board.
 
 \begin{figure}[H]
@@ -581,7 +599,7 @@ documentation is given below in figure
 The "Particle.subscribe" function allows the user to listen out for certain events and then
 attach a custom to these event so that everytime the event occurs the custom function is
 called. This is very useful for this project as  public ip addresss are subject to change meaning
-if I use this the ip address will always be the current one. The "Particle.publish" is a way
+if I use this as the ip address will always be the current one. The "Particle.publish" is a way
 of manually triggering the event specified in the paremeters. These two lines can be used
 in the device code where the we can attach a custom function that changes a global string variable
 that contains the ip address. Then it's easy to change the relay control function to return this
@@ -706,10 +724,13 @@ requests using the "requests.get(<url>)" method where "<url>" is the url that yo
 request to. We will set this url to the one of the particle api.
 
 To then connect to the server and communicate with it I can use the "pxssh" library and use that to
-create a proper shell session between the server and interface. 
+create a proper shell session between the server and the interface. I will go into details about
+how I program this in interfact section of the build section.
 
 
 \pagebreak
+
+\section{Build}
 
 \section{Information}
 
@@ -803,6 +824,18 @@ create a proper shell session between the server and interface.
             \item Article title: Transistors - learn.sparkfun.com
             \item Website title: Learn.sparkfun.com
             \item URL          : \url{https://learn.sparkfun.com/tutorials/transistors}
+            \item Date         : ???????
+        \end{itemize}
+    \end{itemize}
+
+\bibitem{relaySheild}
+    \begin{itemize}
+        \item Information regarding the particle photon relay sheild
+        \begin{itemize}
+            \item Author       : Particle
+            \item Article title: Particle
+            \item Website title: Docs.particle.io
+            \item URL          : \url{https://docs.particle.io/reference/firmware/photon/#get-public-ip}
             \item Date         : ???????
         \end{itemize}
     \end{itemize}

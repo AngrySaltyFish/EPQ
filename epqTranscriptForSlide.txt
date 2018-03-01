@@ -16,5 +16,5 @@ to turn the server on and off remotely and this is essentially the aim of this p
 
 Now that I have a clear aim I would like to break this problem into smaller ones to
 help me acheive the characteristics that I want. The first I talk about in the previous
-slide and is the main goal of this project. The second one is important and relates
-to being able to  
+slide and is the main goal of this project. The second one is important as I want to
+reduce the cost of running the device as much as possible. The next item 

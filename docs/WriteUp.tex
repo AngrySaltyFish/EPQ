@@ -7,14 +7,14 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{float}
-
+\usepackage{subfig}
+\usepackage[framemethod=tikz]{mdframed}
 
 \hypersetup{
     colorlinks=true, %set true if you want colored links
     linktoc=all,     %set to all if you want both sections and subsections linked
     linkcolor=black,  %choose some color if you want links to stand out
 }
-
 \title{EPQ Writeup}
 \date{}
 \author{James Rand}
@@ -56,6 +56,20 @@
     tabsize=2,                       % sets default tabsize to 2 spaces
     title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
+
+\newcommand\mylstcaption{}
+\mdfdefinestyle{mymdstyle}{
+hidealllines=true,
+middleextra={
+  \node[anchor=west] at (O|-P)
+    {\lstlistingname~\thelstlisting\  (Cont.):~\mylstcaption};},
+secondextra={
+  \node[anchor=west] at (O|-P)
+    {\lstlistingname~\thelstlisting\  (Cont.):~\mylstcaption};},
+splittopskip=2\baselineskip
+}
+\surroundwithmdframed[style=mymdstyle]{lstlisting}
+\newmdenv[style=mymdstyle]{mdlisting}
 
 \begin{document}
 
@@ -356,12 +370,12 @@ addon board is shown down below in figure ~\ref{fig:relayShield}.
 
 
 \begin{figure}[H]
-    \noindent\makebox[\textwidth]{\includegraphics[width=\paperwidth-3cm]{pictures/relay-sheidl.jpg}};
+    \noindent\makebox[\textwidth]{\includegraphics[width=\paperwidth-3cm]{pictures/relay-shield.jpg}};
     \caption{Picture of the relay shield} \label{fig:relayShield}
 \end{figure}
 
 \subsubsection{Conclusion}
-In conclusion I decided to go with the relay addon board due to it being design for this exact practice and
+In conclusion I decided to go with the relay addon board due to it being designed for this exact practice and
 it's convience. Even though the experiment performed with the transistor was sucessful it would fail on
 higher voltages on the mains therefore it would be less power efficent.
 
@@ -725,12 +739,238 @@ request to. We will set this url to the one of the particle api.
 
 To then connect to the server and communicate with it I can use the "pxssh" library and use that to
 create a proper shell session between the server and the interface. I will go into details about
-how I program this in interfact section of the build section.
+how I will program this in the interface section of the build section.
 
-
-\pagebreak
 
 \section{Build}
+In this section I will describe the process of me building this project
+
+\subsection{Client Interface}
+Originally I thought the best approach to connect to the server through ssh was to use a third party library
+but after some experimentation I discovered that using the "os.open" command instead was significantly
+easier and was much more effective at the job. This does mean however that it will only run on unix systems
+with ssh install but considering in my previous solution you would need to install a library it is not
+much of a disadvantage. Fortunatly that was the only change that was needed from my original plan. I have
+listed the code below and will describe everthing it does.
+
+\begin{mdlisting}
+        \lstinputlisting[language=python, caption=\mylstcaption, label=lst:c1]{../src/interface.py}
+\end{mdlisting}
+
+The first thing to consider is the options dictionary which is use to store all of
+the operations that the user can perform. The options that are displayed to the user
+are store as a key in the dictionary while the values are then used to store the
+relevant procedure. Other key variables in this are "ip\_address", "access\_token"
+and "url". The ip\_adress variable is used to store the public ip address of the server
+and is updated through the getIp() procedure. The "access\_token" variable stores
+the access token needed by the api to give it correct permissions to perform actions.
+Finally "url" is used to store the url of all of the api requests that we are going to
+perform.
+
+\subsection{The Hardware}
+The first and most important thing for me to do was to connect the particle photon to the
+server so that it could be remotely controlled. This was easy to do but did require some
+solder which I will explain here.
+
+\subsubsection{Soldering}
+Soldering is the process of joining wires and electrical components together. It is done
+by heating a soft alloy called solder and heating it up till it melts. While in this molten
+state you can attach the components needed. In order to heat the solder you need a piece of
+equitment called a soldering iron. It is good practive to first clean the soldering iron
+before you turn it on by scratching off the outmost layer with sand paper. Once this is
+done you can tin the solder iron which is where you apply solder the iron while it is still
+heating it up to provide a protective layer. Once this setup is done you can finally begin to
+solder. When soldering you should first heat the components with the soldering iron and then
+feed the solder into the join.
+
+
+\subsubsection{Connecting the photon to the server}
+The first thing that I did was to remove the switch that was attached to the server. This was easily
+done with a pair of wire cutters. Once this was done I use some wire strippers to get rid of the
+insulation on the wires so that I could begin soldering. I then twisted the copper wires together
+so there were no individual strands so that I could then tin the coper bit with solder. I did this
+by first taping the wire down so it couldn't move and then heat the copper part with my solder iron
+and placed solder along it. I did this to both server wires along with the wires that would connect
+the relay sheild and the server. The reason why I tinned theses wires is because when it comes
+to connecting them it is significantly easier when both wires already have solder on them. With these
+tinned I connected the wires with additional solder to the outgoing wires and wraped them in electrical tape.
+I did this to stop the wires from turning on the server if they touch one another. Finally I connected the
+outgoing wires to the relay.
+
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{tabular} {ccc}
+            \subfloat[Pictue of soldering iron]{\includegraphics[width = 2in]{pictures/camera/solderIron.jpg}} &
+            \subfloat[Picure of server wires before soldering]{\includegraphics[width = 2in]{pictures/camera/unSolderServerWires.jpg}} &
+            \subfloat[Picture of taped down wire]{\includegraphics[width = 2in]{pictures/camera/tapedServerWire.jpg}} \\
+
+            \subfloat[Soldered Wires]{\includegraphics[width = 2in]{pictures/camera/solderServerWiresNewest.jpg}} &
+            \subfloat[Wires insulated after soldering]{\includegraphics[width = 2in]{pictures/camera/serverWiresConnectedAndInuslated.jpg}} &
+            \subfloat[Outgoing wires connect to relay]{\includegraphics[width = 2in]{pictures/camera/outGoingWiresToRelay.jpg}} \\
+        \end{tabular}
+    \end{center}
+    \caption{Photos of build} \label{fig:photonServerPicsBuild}
+\end{figure}
+
+
+\subsubsection{Connect the server power cord to the photon}
+The next thing that needed to be done was to the mains power supply to the server to the photon
+so that it can regulate the power supply. In order to do this I needed to understand what cables
+run in the mains power supply and how I can manipulate these wires to control the server. The mains
+power supply consists of three wires: the neutral wire which is blue; the live wire which is brown
+and the earth wire which has green and yellow strips for clouring. I was not sure whether the
+server uses earth or not so I thought it would be best not to attach the relay to the earth wire. Because
+of this I chose the neutral wire as I was sure this would have the desired affect on the server.
+The first thing for me to do was to strip away the outer insulation to revel the three wires. I did this
+with a knife by first cutting circles around the wire at certain points and then making a straight
+line incision between these two circles. I the cut the neutral wire and strip off the insulation on
+both ends. After twisting the coper innerards I attached it to the relay. I did however attached it
+differently to the relay as I wanted this to be in an "normally close" state. This meant do both
+the middle pin and the far right pin.
+
+Once this was done it was time to add the manual override switch. This was easy to do as I could connect
+the switch in the live wire of the mains power supply to the server. The first thing I had to do was
+to cut the wire and strip the insulation off. After this was done I twisted the copper core together and
+threaded it through the hole of the switch. I then soldered this in place and wrapped each end with
+electrical tape.
+
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{tabular} {ccc}
+            \subfloat[Pictue showing the three wires]{\includegraphics[width = 2in]{pictures/camera/removeOuterInsulationMainsWire.jpg}} &
+            \subfloat[Pictue showing all the wires connected to the relays]{\includegraphics[width = 2in]{pictures/camera/variousWiresConnectedToRelay.jpg}} & \\
+            \subfloat[Pictue showing wires threaded through switch]{\includegraphics[width = 2in]{pictures/camera/theadedSwitch.jpg}} &
+
+            \subfloat[Pictue showing the wires soldered to switch]{\includegraphics[width = 2in]{pictures/camera/solderSwitch.jpg}} &
+            \subfloat[Pictue showing the switch insulated]{\includegraphics[width = 2in]{pictures/camera/insulatedSwitch.jpg}} \\
+        \end{tabular}
+    \end{center}
+    \caption{Photos of build} \label{fig:photonServerPicsBuild}
+\end{figure}
+
+\subsubsection{Connect the server usb power to the photon}
+The final thing to do in the build is to connect a relay up to the server usb and the power supply of
+the particle photon so that when the server turns on the photon is turned off. The start of this process
+is similar to the previous section as I need to remove the outer insulation of cable powering the photon
+and then select the correct wire. In this case however there are four wires. Two for data, two for power.
+I'm only interested in the power ones which are labeled red and black. It doesn't matter which of these
+wires I choose but I decided to use the red one. I then need to take the power from the usb outlet which
+is simple to do from a old usb cable. All that is needed is to cut the wire and extract the red and black
+wires to power the relay. Once this is done I just need to connect the appropitate wires to the correct
+places. The power to the photon board should go across normally close while the power from the server
+usb should go across the coil. I then solder these wires in place and coverer the ends in insulation
+tape. Interestingly the usb wire I connected to the server did not have same colours as the wires
+in the other usb cable. This is likely due to the one connected to the server having a ground
+wire. To figure out the power cables for this wire I used a multi metre to measure the voltage across
+the two of the wires until it read out 5 volts. When it read out this 5 volt value I knew those two
+wires are the one responsible for power. I also had to apply lots of electrical tape as I needed to
+ensure that the pins were properly insulated.
+
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{tabular} {ccc}
+            \subfloat[Removed outer insulation on usb]{\includegraphics[width = 2in]{pictures/camera/phtonPowerOuterInsulationRm.jpg}} &
+            \subfloat[Tined photon power wires twisted around pins on relay]{\includegraphics[width = 2in]{pictures/camera/hookedPreSolderExtRelay.jpg}} &
+            \subfloat[Photon power wires soldered to relay]{\includegraphics[width = 2in]{pictures/camera/solderedExtRelay.jpg}} \\
+            \subfloat[Finding correct wires with multimetre]{\includegraphics[width = 2in]{pictures/camera/multiMetre.jpg}} &
+            \subfloat[Insulated solder bit with electrical tape]{\includegraphics[width = 2in]{pictures/camera/halfInsulatedExtRelay.jpg}} &
+            \subfloat[Soldered and Insulated the rest of the wires]{\includegraphics[width = 2in]{pictures/camera/fullyInsulatedExtRelay.jpg}} \\
+        \end{tabular}
+    \end{center}
+    \caption{Photos of build} \label{fig:photonServerPicsBuild}
+\end{figure}
+
+\subsection{Code for the photon}
+There are some minor alterations that need to be made for the photon board. This mainly to turn on relay 2 at the start.
+
+
+\begin{figure}[H]
+    \begin{lstlisting}
+    int RELAY1 = D0;
+    int RELAY2 = D1;
+    char ip[15];
+
+    void setup()
+    {
+       //Initilize the relay control pins as output
+       pinMode(RELAY1, OUTPUT);
+       pinMode(RELAY2, OUTPUT);
+       // Initialize all relays to an OFF state
+       digitalWrite(RELAY2, HIGH);
+       digitalWrite(RELAY1, LOW);
+
+       //register the Particle function
+       Particle.function("relay", relayControl);\
+       Particle.variable("IpAddr", ip);
+       Particle.subscribe("particle/device/ip" , handler);
+       Particle.publish("particle/device/ip");
+
+    }
+
+    void handler(const char *topic, const char *data)
+    {
+        strcpy(ip, data);
+    }
+
+    // command format r1,HIGH
+    int relayControl(String command)
+    {
+        digitalWrite(RELAY2, 0);
+        delay(1000);
+        digitalWrite(RELAY1, 1);
+        delay(500);
+        digitalWrite(RELAY1, 0);
+
+        return 1;
+    }
+    \end{lstlisting}
+    \caption{Final code for controller} \label{fig:interfaceCode}
+    \vspace{0.5cm}
+\end{figure}
+
+
+\section{Evaluation}
+
+Overall i'm happy with the result of the project as it meets all of the goals that I set out at
+the start. I think the power consumption of the device is at an absoulute minimal this has however
+come at a cost which you can see below in figure \ref{fig:costTable}.
+
+\begin{figure}[H]
+    \begin{center}
+        \begin{tabular} {| c | c |}
+            \hline
+            \textbf{Item}                 &      \textbf{Cost}      \\ \hline
+            Particle photon dev Board     &         £17.00          \\ \hline
+            Relay sheild                  &         £25.00          \\ \hline
+            Switch                        &         £0.00           \\ \hline
+            External relay x5             &         £6.65           \\ \hline
+            Wire                          &         £0.00           \\ \hline
+            Micro usb wires x2            &         £0.00           \\ \hline
+            \multicolumn{2}{ | c |}{\textbf{Total: £48.65}}         \\ \hline
+        \end{tabular}
+    \end{center}
+    \caption{Cost table} \label{fig:costTable}
+    \vspace{0.5cm}
+    The items with the cost of £0.00 are items that I already had before the start of this project.
+\end{figure}
+
+The total price is not below my maximum budget but is definetly higher than I would like it to
+be. The price could have been significantly lower if I used some of the spare external relays
+instead of buying the relay sheild. That being said doing this would be hard to acheieve within
+the time restraints.
+
+Time became an issue during this project, I think this mainly because I spent too long on the research
+and should have use that time on the design section as I had a lot of other matters to attend to during
+that period. The build and evaluation took shorter amount of time than original outlined.
+
+Although the final build does everything that I set it out to do I think it can be extended by adding
+some of the interace functionality to a discord bot. This would mean I would be able to interact with
+the server on any platform and allow others to easily communicate with it as well. I also think it would
+be good to automatically disable the turn on features between certain times as when the server comes on
+it can be noisy and prevent people from sleeping.
 
 \section{Information}
 
@@ -743,7 +983,6 @@ how I program this in interfact section of the build section.
             \item Article title: Maker Shed: Arduino | Raspberry Pi | 3D Printers | Microcontroller Kit
             \item Website title: Maker Shed
             \item URL          : \url{https://www.makershed.com/pages/raspberry-pi-comparison-chart}
-            \item Date         : ???????
         \end{itemize}
     \end{itemize}
 
@@ -754,7 +993,6 @@ how I program this in interfact section of the build section.
             \item Article title: Selecting BeagleBoard Hardware | DigiKey
             \item Website title: Digikey.com
             \item URL          : \url{https://www.digikey.com/en/product-highlight/t/texas-instruments/beagleboard}
-            \item Date         : ???????
         \end{itemize}
 
         \item Information for the price of a begalbone kit
@@ -762,7 +1000,6 @@ how I program this in interfact section of the build section.
             \item Article title: BeagleBone Black Wireless Starter Kit
             \item Website title: Amazon.com
             \item URL: \url{https://www.amazon.com/BeagleBone-Black-Wireless-Starter-Kit/dp/B01NGTOX40/ref=sr_1_2?ie=UTF8&qid=1510164000&sr=8-2&keywords=beaglebone+wifi&dpID=51g7KiFRteL&preST=_SY300_QL70_&dpSrc=srch}
-            \item Date         : ???????
         \end{itemize}
 
         \item Information for the spec specifc to the BeagleBone black wireless
@@ -770,7 +1007,6 @@ how I program this in interfact section of the build section.
             \item Article title: BeagleBoard.org - black-wireless
             \item Website title: Beagleboard.org
             \item URL          : \url{https://beagleboard.org/black-wireless}
-            \item Date         : ???????
         \end{itemize}
 
         \item Information for the spec specifc to the BeagleBone black
@@ -778,7 +1014,6 @@ how I program this in interfact section of the build section.
             \item Article title: BeagleBoard.org - black
             \item Website title: BeagleBoard.org - black
             \item URL          : \url{https://beagleboard.org/black/}
-            \item Date         : ???????
         \end{itemize}
 
     \end{itemize}
@@ -791,7 +1026,6 @@ how I program this in interfact section of the build section.
             \item Article title: Arduino Uno | Make: DIY Projects and Ideas for Makers
             \item Website title: Make: DIY Projects and Ideas for Makers
             \item URL          : \url{https://makezine.com/product-review/arduino-uno/}
-            \item Date         : ???????
         \end{itemize}
     \end{itemize}
 
@@ -803,7 +1037,6 @@ how I program this in interfact section of the build section.
             \item Article title: Particle Photon | Make: DIY Projects and Ideas for Makers
             \item Website title: Make: DIY Projects and Ideas for Makers
             \item URL          : \url{https://makezine.com/product-review/particle-photon/}
-            \item Date         : ???????
         \end{itemize}
 
         \item A datasheet for the particle photon
@@ -812,7 +1045,6 @@ how I program this in interfact section of the build section.
             \item Article title: Particle
             \item Website title: Docs.particle.io
             \item URL          : \url{https://makezine.com/product-review/particle-photon/}
-            \item Date         : ???????
         \end{itemize}
     \end{itemize}
 
@@ -824,7 +1056,6 @@ how I program this in interfact section of the build section.
             \item Article title: Transistors - learn.sparkfun.com
             \item Website title: Learn.sparkfun.com
             \item URL          : \url{https://learn.sparkfun.com/tutorials/transistors}
-            \item Date         : ???????
         \end{itemize}
     \end{itemize}
 
@@ -836,7 +1067,6 @@ how I program this in interfact section of the build section.
             \item Article title: Particle
             \item Website title: Docs.particle.io
             \item URL          : \url{https://docs.particle.io/reference/firmware/photon/#get-public-ip}
-            \item Date         : ???????
         \end{itemize}
     \end{itemize}
 
@@ -848,7 +1078,6 @@ how I program this in interfact section of the build section.
             \item Article title: Particle
             \item Website title: Docs.particle.io
             \item URL          : \url{https://docs.particle.io/reference/firmware/photon/#get-public-ip}
-            \item Date         : ???????
         \end{itemize}
     \end{itemize}
 
@@ -859,7 +1088,6 @@ how I program this in interfact section of the build section.
             \item Article title: Requests: HTTP for Humans — Requests 2.18.4 documentation
             \item Website title: Docs.python-requests.org
             \item URL          : \url{http://docs.python-requests.org/en/master/}
-            \item Date         : ???????
         \end{itemize}
     \end{itemize}
 \end{thebibliography}
@@ -887,7 +1115,20 @@ how I program this in interfact section of the build section.
                              &switches                                   \\ \hline
     20/11/17                 &Started the design and looking into the    \\
                              &particle photon docs.                      \\ \hline
-
+    15/12/17                 &Started experimentations with coding the   \\
+                             &particle photon.                           \\ \hline
+    30/12/17                 &Created the original relay code in the     \\
+                             &design and tested it.                      \\ \hline
+    10/01/18                 &Started to write up the design             \\ \hline
+    15/01/18                 &Created designs in kicad.                  \\ \hline
+    20/01/18                 &Finished design write up.                  \\ \hline
+    05/02/18                 &Started to build the project               \\ \hline
+    12/02/18                 &Connected the server to the photon and the \\
+                             &mains power supply to the photon           \\ \hline
+    15/02/18                 &Finished build by connect the server usb   \\
+                             &port to the external relay.                \\ \hline
+    16/02/18                 &Wrote up the build                         \\ \hline
+    18/02/18                 &Wrote up the evaluation for the project    \\ \hline
 \end{tabularx}
 
 \end{document}

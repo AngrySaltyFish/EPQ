@@ -85,7 +85,7 @@ splittopskip=2\baselineskip
 \subsection{Objective}
 
 In this extended project I plan to design a device that will be able to interact with a file
-server. This device must be able to acheive some of the following functions:
+server. This device must be able to achieve some of the following functions:
 
 \begin{itemize}
     \item Be able to turn the server on and off
@@ -96,24 +96,24 @@ server. This device must be able to acheive some of the following functions:
 \end{itemize}
 
 The first object that I wish to discuss is having the ability to remotely turn on and off the
-server. This could be done in two ways: the first would be to use wake on lan which would be
+server. This could be done in two ways: the first would be to use wake on LAN which would be
 a way of doing it through software; the second is using electrical components to act as an
 electric switch. \\
 
-The first approach I would like to talk about is using wake on lan. This seems to be the default
+The first approach I would like to talk about is using wake on LAN. This seems to be the default
 way of doing what I am proposing which means that setting this up will be straight forward and
 well documented. The only problem with using this method is that the server will constantly need
 to be on standby which conflicts with my second goal of this project being power efficient. The
 second approach is the opposite of the first as it will be more difficult to set up due to the
-fact it will require me to buy parts which need to be appopiate to interact the server. On the
+fact it will require me to buy parts which need to be appropriate to interact the server. On the
 plus side though it could be a more power efficient as I could design it to control the mains
 power supply as well so that it will not need to be on standby.
 
 \subsection{Time scale}
 
-Since I have a limited amount of time to acheive my goal I have created the following Gante
+Since I have a limited amount of time to achieve my goal I have created the following Gantt
 chart (Fig ~\ref{fig:Gantt Chart}) to illustrate how I intend to use my time. This chart
-only shows how I will use the time up to the initial draft. There is time availiable after
+only shows how I will use the time up to the initial draft. There is time available after
 this draft but I would like to use this time to improve my write up and act upon feedback.
 
 \begin{figure}
@@ -135,7 +135,7 @@ this draft but I would like to use this time to improve my write up and act upon
 \end{figure}
 
 \break
-\section{Reseach}
+\section{Research}
 \subsection{choosing the right board}
 
 The very first thing that I need to consider when designing this is what development board
@@ -145,7 +145,7 @@ and control through the internet and power consumption.
 
 The reason I think power consumption should be something to consider is that this board will
 be on for long periods of time to make sure that the server is always available. Which means
-running a power hungry device will be expensive and not pratical. The price is an obvious
+running a power hungry device will be expensive and not practical. The price is an obvious
 important feature and since I may be buying extra hardware components I need to be extra wary of
 the cost of the board. Since I will be controlling the board through the internet it needs to
 have internet connectivity and be straightforward to setup. Finally I need to think about the
@@ -154,7 +154,7 @@ a custom written program.
 
 \subsubsection{Raspberry Pi}
 
-The Raspberry Pi is definatly one of the more well known development boards that are use
+The Raspberry Pi is definitely one of the more well known development boards that are use
 extensively by hobbyists. This means that the Raspberry Pi will be well documented so if
 I come across any difficulties it will be easier to troubleshoot. The table below compares
 the technical specs of all of the models. \\
@@ -176,18 +176,18 @@ The source of the information is in the refrences\cite{raspberryPi}
 \newline
 
 The characteristics that I have mentioned above make the raspberry effortless to develop on;
-mainly because it runs the linux operating system. This means that I can use and run any language
-that runs linux givving me a wide range of tools to use. I could also install and use programs that
+mainly because it runs the Linux operating system. This means that I can use and run any language
+that runs Linux giving me a wide range of tools to use. I could also install and use programs that
 other people have written. As mention above the raspberry pi is very popular meaning the is a wide
-range of hardware extenstion that may make it easier to control external components.
+range of hardware extension that may make it easier to control external components.
 
 \subsubsection{BeagleBone Black / BeagleBone Black Wireless}
 
 This section will cover a comparison of features on the BeagleBone Black and the BeagleBone Black Wireless.
 The only difference between these boards is that one has bluetooth and wifi while the other has ethernet.
-These boards, similar to the raspberry pi, are very popular meaning there is a wide range of documentaion
-and addons that can be used although it should be noted that they are not as popular as the raspberry pi.
-The table below will give a summery of the features availiable. \\
+These boards, similar to the raspberry pi, are very popular meaning there is a wide range of documentation
+and add-ons that can be used although it should be noted that they are not as popular as the raspberry pi.
+The table below will give a summery of the features available. \\
 
 %\newline
 \begin{tabularx}{\textwidth}{| X | X | X |}
@@ -208,20 +208,20 @@ The source of the information is in the refrences\cite{beagleboard}
 
 The first thing that I noticed when researching this board is that it can be pricey but looking
 at the specs you can see why. These boards are very similar to the raspberry pi but I thought it
-was worth discussing this board as it excels in hardware thanks to it's many pins. Simarly to the
+was worth discussing this board as it excels in hardware thanks to it's many pins. Similarly to the
 raspberry pi it also runs Linux. The BeagleBone also has lower power consumption than the raspberry
 pi. Finally it is worth noting that it uses C/C++ for the programming language which is more difficult
 to write in than a language such as Python.
 
-\subsubsection{Audino Uno}
+\subsubsection{Arduino Uno}
 
-The Audino is a classic development board that instead of the previous two items does not have the linux
-operating system. That being said due to it's large poplarity there are a huge number of libraries and
+The arduino is a classic development board that instead of the previous two items does not have the Linux
+operating system. That being said due to it's large popularity there are a huge number of libraries and
 APIs that you can use. \\
 
 \begin{tabularx}{\textwidth}{| X | X |}
     \hline
-    Audiono Model    &   Audiono Uno \\ \hline
+    Arduino Model    &   Arduino Uno \\ \hline
     Price            &       \$25    \\ \hline
     Processor Speed  &      16MHz    \\ \hline
     Power Consumption&    50mA @ 5v  \\ \hline
@@ -234,16 +234,16 @@ APIs that you can use. \\
 The source of the information is in the refrences\cite{ardino}
 \newline
 
-The specs on the ardunio are considerably lower than the previous two items due to the fact that
+The specs on the arduino are considerably lower than the previous two items due to the fact that
 the arduino is a microcontroller instead of a size down computer. This means that it consumes less
 power and has less features that the other two can offer. There is also a problem with wireless
-capabilities on the audino as it has none built in and would require me to buy a WiFi sheild.
+capabilities on the arduino as it has none built in and would require me to buy a WiFi sheild.
 
 \subsubsection{Particle Photon}
 
 This board is much more obscure than the rest of the boards that I have compared. Despite this there
-are a lot of attractive charactersitics that this board like the fact that it has in built wireless
-and can be communicated with through the internet without the need to port forward. Additionaly this
+are a lot of attractive characteristics that this board like the fact that it has in built wireless
+and can be communicated with through the internet without the need to port forward. Additionally this
 board is the smallest of all of the ones that I have considered. \\
 
 \begin{tabularx}{\textwidth}{| X | X |}
@@ -262,7 +262,7 @@ board is the smallest of all of the ones that I have considered. \\
 The source of the information is in the refrences\cite{particlePhotonSpec}
 \newline
 
-Similarly to the Arduino this board is a microcontroller. The features I mentioned above reagarding
+Similarly to the Arduino this board is a microcontroller. The features I mentioned above regarding
 connectivity will make development considerable easier. This is also the cheapest board that I have
 compared giving me plenty of left over money to buy all the hardware components that I might need.
 
@@ -271,37 +271,37 @@ compared giving me plenty of left over money to buy all the hardware components 
 
 After considering the pros and cons of all of these boards I decided that a microcontroller type
 would be much more suitable for my project. My reasoning behind this is that a fast processor and
-a linux operating system is unecessary in this situation meaning that I would be wasting power on
-features that I am not going to use. The price is also higher for the non-microcontrollers.
+a Linux operating system is unnecessary in this situation meaning that I would be wasting power on
+features that I am not going to use. The price is also higher for the non-micro-controllers.
 
-I now needed to make a decision between the Audino and the Particle Photon. Although the arduino has
-a huge number of libraires and a comprehensive documentation; I came to the conclus
+I now needed to make a decision between the Arduino and the Particle Photon. Although the arduino has
+a huge number of libraries and a comprehensive documentation; I came to the conclusion
 
-\subsection{Transitors vs Relays}
+\subsection{Transistors vs Relays}
 
 In order to interact with the server on a hardware level I need a component that can act like an
-electrical switch. This is so that when I need to turn the server on and off I can acheive this with
-this "electical switch". There are two components that took my interest while researching this. The
-first is transitros which are part of the semiconductor family and are largely used in computers. The
-second is a relay which unlike a transitor has moving parts and works using an electro magnet. The first
-that I will discuss in detail are transitors.
+electrical switch. This is so that when I need to turn the server on and off I can achieve this with
+this "electrical switch". There are two components that took my interest while researching this. The
+first is transistors which are part of the semiconductor family and are largely used in computers. The
+second is a relay which unlike a transistor has moving parts and works using an electro magnet. The first
+that I will discuss in detail are transistors.
 
-\subsubsection{Transitors}
+\subsubsection{Transistors}
 
 \begin{figure}
     There are many different types of transistors but the most common and the one I am most interested in is
     the "Bipolar junction transistor" or "BJT" for short. There are two types of BJT that I need to discuss
-    which are NPN and PNP. Before I start describing those it is importatnt to understand the basic anotomey
+    which are NPN and PNP. Before I start describing those it is important to understand the basic anatomy
     of transistors first.
 
     \includegraphics{pictures/transistor-layout.png}
     \caption{transistor layout} \label{fig:transistor-layout}
     \vspace{0.5cm}
 
-    In the layout above (Fig ~\ref{fig:transistor-layout}) you can clearly see that a transitor has three legs.
-    These legs each do different things and have special names: collecter, base and emitter. The leg in the middle
-    called the base is the one we are most interested in as this can control the current throught the emitter and
-    collector by varying the input to it. The collector and emitter can change based upon the type of transitor
+    In the layout above (Fig ~\ref{fig:transistor-layout}) you can clearly see that a transistor has three legs.
+    These legs each do different things and have special names: collector, base and emitter. The leg in the middle
+    called the base is the one we are most interested in as this can control the current through the emitter and
+    collector by varying the input to it. The collector and emitter can change based upon the type of transistor
 
 \end{figure}
 
@@ -310,12 +310,12 @@ that I will discuss in detail are transitors.
     \caption{NPN vs PNP} \label{fig:different-transitor-layout}
     \vspace{0.5cm}
 
-    The two different diagrams above show the different types of BJT transitors
-    (Fig ~\ref{fig:different-transitor-layout}). \\
+    The two different diagrams above show the different types of BJT transistors
+    (Fig ~\ref{fig:different-transistor-layout}). \\
 
     The only difference between these two types which is illustrated by this figure is the direction of the
-    emiiter arrow. This small difference has big implications and lead to different properties for each. I
-    will now start to disscuss these consequences and which out of the two I think is most suitable for this
+    emitter arrow. This small difference has big implications and lead to different properties for each. I
+    will now start to discuss these consequences and which out of the two I think is most suitable for this
     project.
 
 \end{figure}
@@ -323,32 +323,32 @@ that I will discuss in detail are transitors.
 \break
 
 Unlike many other electrical components like resistors and capacitors which have a linear relationship with
-voltage and current transitors have four different ways of handling electrical power:
+voltage and current transistors have four different ways of handling electrical power:
 
 \begin{itemize}
-    \item Saturation     --- Which freely alows volatage and current to flow from the collector to emitter
-    \item Cut-off        --- Allows no volatege or current from collector to emitter. Oposite of "Saturation"
+    \item Saturation     --- Which freely allows voltage and current to flow from the collector to emitter
+    \item Cut-off        --- Allows no voltage or current from collector to emitter. Opposite of "Saturation"
     \item Active         --- The current from the collector to emitter is proportional to the current flowing
         through the base
     \item Reverse-Active --- Similar to "Active" the current is proportional to the base but flows in reverse
 \end{itemize}
 
 For the purposes of this project the only modes worth discussing are "Saturation" and "Cut-off" because we
-are only interested in on or off and not anything inbetween.
+are only interested in on or off and not anything in-between.
 
 To determine what mode the transistor is in you need to investigate what voltage is supplied to each pin.
-In order to put a NPN transistor into staturation mode the volatege supplied to the base, V\textsubscript{B}
+In order to put a NPN transistor into saturation mode the voltage supplied to the base, V\textsubscript{B}
 needs to be greater that the voltage supplied to the emitter, V\textsubscript{E}. To put into cut-off mode
 it needs to be the opposite. Likewise with PNP transistors it is reversed.
 
 After considering these factors I decided to perform an experiment to get use to using transistors. I did
-this by connect up an led and transistor to my board and checking that I can turn it off and on by emmitting
+this by connect up an led and transistor to my board and checking that I can turn it off and on by emitting
 an output voltage on one of the pins. A schematic of my experiment can be seen below in figure >>>>>>.
 
 
 
 I flash a example program onto the board called "Blinky". The purpose of this program to to turn a output
-pin on and off every second. This output pin is labeled the voltage alternator in th diagram. After I
+pin on and off every second. This output pin is labelled the voltage alternator in the diagram. After I
 design this circuit I then built it on a bread board which is shown below in figure >>>>>>>. The result
 of this is the led turn off and the on again.
 
@@ -359,14 +359,14 @@ The source of the information for this section can be found in the references \c
 An alternative to the transistors is the relay. Similarly to the transistor this can work as an electronic
 switch. The main difference between a relay and a transistor is that a relay have physical moving parts
 inside. Inside a relay there is an electro magnet which can pull a thin piece of metal down to make the
-switch close. This is how a relay works. Due to this mechanisism a relay can be significantly bigger than
-a transistor and it can calso handle higher volatages with ease. A downside to a relay is that it can
-take longer for it to switch on and off. Luckly with my choice of board there is a addon board that has
+switch close. This is how a relay works. Due to this mechanism a relay can be significantly bigger than
+a transistor and it can also handle higher voltages with ease. A downside to a relay is that it can
+take longer for it to switch on and off. Luckily with my choice of board there is a add-on board that has
 relay support called the "Relay shield"\cite{relaySheild}. This make setting up the relays significantly easier than setting
-up the transistors. This relay sheild can also handle high voltages meaning it may be able to control the
+up the transistors. This relay shield can also handle high voltages meaning it may be able to control the
 mains supply to the server making it more power efficient than transistors. The only downside to using this
-addon is that it is significantly more expensive than using the raw components. A picture of this
-addon board is shown down below in figure ~\ref{fig:relayShield}.
+add-on is that it is significantly more expensive than using the raw components. A picture of this
+add-on board is shown down below in figure ~\ref{fig:relayShield}.
 
 
 \begin{figure}[H]
@@ -375,27 +375,27 @@ addon board is shown down below in figure ~\ref{fig:relayShield}.
 \end{figure}
 
 \subsubsection{Conclusion}
-In conclusion I decided to go with the relay addon board due to it being designed for this exact practice and
-it's convience. Even though the experiment performed with the transistor was sucessful it would fail on
-higher voltages on the mains therefore it would be less power efficent.
+In conclusion I decided to go with the relay add-on board due to it being design for this exact practice and
+it's convenient. Even though the experiment performed with the transistor was successful it would fail on
+higher voltages on the mains therefore it would be less power efficient.
 
 \section{Design}
 
-After doing this research I think it is now time to move on and start building schematics and pesudo code
+After doing this research I think it is now time to move on and start building schematics and pseudo code
 for how I want the project to look like. I think the most critical component of this project is the
 actual functionality of turning the relay on and off remotely.
 
 \subsection{Turning the relay off and on remotely}
 I think the first thing I would like to approach would be the software behind this action. My reasoning
-behind this is that the hardware setup will be very similar to the relay test hardware the only difference
+behind this is that the hardware set-up will be very similar to the relay test hardware the only difference
 is instead of having an led I will have the two power wires from the server.
 
 \subsubsection{Software}
 Before describing how I plan to turn the server off and on I would like to explain the basic structure of
 the particle photon api.
 
-Within the partivle photon api there are three basic functions: setup() and loop(). The first function
-setup is run when the particle photon boots up so this should be use to initialize any important variables
+Within the particle photon api there are three basic functions: set-up() and loop(). The first function
+set-up is run when the particle photon boots up so this should be use to initialize any important variables
 that will be used throughout the function. The second procedure loop repeats all of the code inside as long
 as the photon is switch on. Below is some example code that was use during the tests for the relay and the
 transistor called blinky. This simply turns an pin output on and off and is show in Fig ~\ref{fig:exampleCode}
@@ -530,26 +530,26 @@ I can then modify this code to get to be more specific to the turning on the ser
     \end{lstlisting}
     \caption{Relay Code} \label{fig:relayCode}
     \vspace{0.5cm}
-    This code turns on the relay for 500 miliseconds and then turns it back on again
+    This code turns on the relay for 500 milliseconds and then turns it back on again
     meaning the relayControl function is now used exclusively to turn on the server.
-    This is becuase later on I find an interest feature of the server meaing the photon
+    This is because later on I find an interest feature of the server meaning the photon
     will not be turning the server off.
 
 \end{figure}
 
 \subsubsection{The Hardware}
 The next thing to design in terms of turning on the server is to look at the hardware.
-Fortunatly it is simple to set up and is similar to the hardware in the relay test. The main
+Fortunately it is simple to set up and is similar to the hardware in the relay test. The main
 part of the hardware are two relays that control mains power supply and turning the server on
 from standby and are connected up to the pins "D1" and "D0" respectively. I have also added a
 override switch which will block any attempt to turn on the server. There is however a difference
 between the relay responsible for the mains power supply and the relay for turning on the server
-and that is the inputs that they are connected up to. The mains power suppy is hooked up to the NC
+and that is the inputs that they are connected up to. The mains power supply is hooked up to the NC
 input meaning that current can flow through normally unless the particle photon powers the relay. While
-the relay for turning on the server is connected to NO inputer meaning that current can only flow
+the relay for turning on the server is connected to NO input meaning that current can only flow
 if the relay is powered. This makes sense as in the next section I talk about automatically turning
 off the relay board after it is finished turning on the server meaning that it will not be able to
-consistantly power on the relay on the mains.
+consistently power on the relay on the mains.
 
 \begin{figure}[H]
     \noindent\makebox[\textwidth]{\includegraphics[width=\paperwidth-3cm]{pictures/turnOnRelay.png}};
@@ -558,15 +558,15 @@ consistantly power on the relay on the mains.
 
 
 \subsubsection{Taking advantage of a quirk of the server}
-Interestly the server exhibits an odd behaviour that I can take advantage of to improve my
+Interestingly the server exhibits an odd behaviour that I can take advantage of to improve my
 project which is that the usb ports are not powered when the server is on standby but is powered
 when it is turn on. This is useful for two reasons: the first is that I can use it to properly
 check whether the server has successfully turn on and the second is that I can use this new
 power to turn off the particle photon board after it has finished turning on the server.
 
 This does have a side affect however. Which is that I can no longer use the particle
-photon to turn off the server. This is easily resolved as I plan to have an ssh interface
-with the server meaning I turn it off throuh that connection.
+photon to turn off the server. This is easily resolved as I plan to have an SSH interface
+with the server meaning I turn it off through that connection.
 
 This new feature requires me to add to the design of the hardware. Figure ~\ref{fig:usbSch}
 essentially outlines what I want to add. It shows a relay hooked up to the power source of
@@ -582,9 +582,9 @@ usb the relay becomes open turning off the board.
 Another requirement for device is to be able to forward a shell onto the server. Doing this
 purely from this device is counter productive and goes beyond the scope of this project. The
 approach that make most sense for this project is to have the particle photon grab the public
-ip address and return this to a client whenever the client issues the command to turn on the
+IP address and return this to a client whenever the client issues the command to turn on the
 server. This client will be the the interface for the device stated in one of the predetermined
-goals. For the moment I will analyze what is need to grab the public ip on the deivce. Fortunatly
+goals. For the moment I will analyse what is need to grab the public IP on the device. Fortunately
 this can be done using the particle photon api\cite{publicIPDocs}. The example code given by the
 documentation is given below in figure
 ~\ref{fig:publicIpExample}
@@ -611,13 +611,13 @@ documentation is given below in figure
 \end{figure}
 
 The "Particle.subscribe" function allows the user to listen out for certain events and then
-attach a custom to these event so that everytime the event occurs the custom function is
-called. This is very useful for this project as  public ip addresss are subject to change meaning
+attach a custom to these event so that every time the event occurs the custom function is
+called. This is very useful for this project as  public ip address are subject to change meaning
 if I use this as the ip address will always be the current one. The "Particle.publish" is a way
-of manually triggering the event specified in the paremeters. These two lines can be used
+of manually triggering the event specified in the parameters. These two lines can be used
 in the device code where the we can attach a custom function that changes a global string variable
 that contains the ip address. Then it's easy to change the relay control function to return this
-variable instead of an integear. Once I have this value it should be easy to create a ssh session
+variable instead of an integer. Once I have this value it should be easy to create a SSH session
 with interface and the server. I think this is better than trying to create my own connect as it
 will be more secure and easier to set up.
 
@@ -666,11 +666,11 @@ something like this:
     \end{lstlisting}
 \end{figure}
 
-Unfortunatly this does not compile and raises an error due to the relayControl function.
+Unfortunately this does not compile and raises an error due to the relayControl function.
 According to the documentation this is because functions that are registered with the
-cloud can only return int which raises a fundemental problem with this design. As such
+cloud can only return int which raises a fundamental problem with this design. As such
 I decided that I will register a variable cloud that will contain the ip address and can
-be retrived by a GET request. The working code is shown below.
+be retrieved by a GET request. The working code is shown below.
 
 \begin{figure}[H]
     \begin{lstlisting}
@@ -731,7 +731,7 @@ This section will talk about how I plan to implement a client that can trigger t
 remotely. Since this is the design section as oppose to the build I will only out line how I plan to
 do this without actually coding it. The first and foremost thing that the interface requires is a
 way to communicate with server. At the moment with the design of the board we can communicate with
-POST and GET http requests meaning I need a way of performing those actions. Fortunatly python has
+POST and GET http requests meaning I need a way of performing those actions. Fortunately python has
 many libraries that allow you to perform such actions. One of the most popular and the one that I
 will be using for the interface is the requests library\cite{pythonRequests}. You can send get
 requests using the "requests.get(<url>)" method where "<url>" is the url that you want to send the
@@ -1002,14 +1002,14 @@ it can be noisy and prevent people from sleeping.
             \item URL: \url{https://www.amazon.com/BeagleBone-Black-Wireless-Starter-Kit/dp/B01NGTOX40/ref=sr_1_2?ie=UTF8&qid=1510164000&sr=8-2&keywords=beaglebone+wifi&dpID=51g7KiFRteL&preST=_SY300_QL70_&dpSrc=srch}
         \end{itemize}
 
-        \item Information for the spec specifc to the BeagleBone black wireless
+        \item Information for the spec specific to the BeagleBone black wireless
         \begin{itemize}
             \item Article title: BeagleBoard.org - black-wireless
             \item Website title: Beagleboard.org
             \item URL          : \url{https://beagleboard.org/black-wireless}
         \end{itemize}
 
-        \item Information for the spec specifc to the BeagleBone black
+        \item Information for the spec specific to the BeagleBone black
         \begin{itemize}
             \item Article title: BeagleBoard.org - black
             \item Website title: BeagleBoard.org - black
@@ -1020,7 +1020,7 @@ it can be noisy and prevent people from sleeping.
 
 \bibitem{ardino}
     \begin{itemize}
-        \item Information and specs for the Ardino Uno was gathered at this website
+        \item Information and specs for the arduino uno was gathered at this website
         \begin{itemize}
             \item Author       : Arduino
             \item Article title: Arduino Uno | Make: DIY Projects and Ideas for Makers
@@ -1039,7 +1039,7 @@ it can be noisy and prevent people from sleeping.
             \item URL          : \url{https://makezine.com/product-review/particle-photon/}
         \end{itemize}
 
-        \item A datasheet for the particle photon
+        \item A data sheet for the particle photon
         \begin{itemize}
             \item Author       : Particle
             \item Article title: Particle
@@ -1050,7 +1050,7 @@ it can be noisy and prevent people from sleeping.
 
 \bibitem{transistor}
     \begin{itemize}
-        \item Information and specs for the Ardino Uno was gathered at this website
+        \item Information and specs for the Arduino Uno was gathered at this website
         \begin{itemize}
             \item Author       : SparkFun Kit
             \item Article title: Transistors - learn.sparkfun.com
@@ -1099,16 +1099,16 @@ it can be noisy and prevent people from sleeping.
     \textbf{Date}            &               \textbf{Activity}           \\ \hline
     21/08/17                 &This is the first day when I outlined what \\
                              &I want my project to be and decided on a   \\
-                             &title.                                     \\ \hline
+                             &title. I also began to \\ \hline
     28/08/17                 &This is where I create and outline of what \\
                              &I want to allocate to                      \\ \hline
     04/09/17                 &I started to research the                  \\
                              &boards that I was thinking of              \\
                              &using.                                     \\ \hline
     02/10/17                 &Finished the research on the boards and    \\
-                             &started to look into the diffrent          \\
+                             &started to look into the different          \\
                              &electrical switches I can use.             \\ \hline
-    08/10/17                 &This is the day that I recieved            \\
+    08/10/17                 &This is the day that I received            \\
                              &the particle photon and performed          \\
                              &the transistor test with it.               \\ \hline
     06/11/17                 &Finished the research on electrical        \\
